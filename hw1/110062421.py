@@ -11,8 +11,6 @@ from collections import Counter
 
 def words(text): return re.findall(r'\w+', text.lower())
 
-WORDS = Counter(words(open('big.txt').read()) + words(open('lemmas.txt').read()))
-
 def P(word):
   "Probability of `word`."
   return WORDS[word] / sum(WORDS.values())
@@ -67,6 +65,6 @@ def Testset(lines):
           for (right, wrongs) in (line.split(':') for line in lines)
           for wrong in wrongs.split()]
 
-if __name__ == '__main__':
-  spelltest(Testset(open('spell-testset1.txt')))
-  spelltest(Testset(open('spell-testset2.txt')))
+WORDS = Counter(words(open('big.txt').read()) + words(open('lemmas.txt').read()))
+spelltest(Testset(open('spell-testset1.txt')))
+spelltest(Testset(open('spell-testset2.txt')))

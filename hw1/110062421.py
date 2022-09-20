@@ -9,7 +9,7 @@ MIT license: www.opensource.org/licenses/mit-license.php
 import re
 from collections import Counter
 
-def words(text): return re.findall(r'\w+', text.lower())
+def words(text): return re.findall(r"\w+", text.lower())
 
 def P(word):
   "Probability of `word`."
@@ -29,7 +29,7 @@ def known(words):
 
 def edits1(word):
   "All edits that are one edit away from `word`."
-  letters    = 'abcdefghijklmnopqrstuvwxyz'
+  letters    = "abcdefghijklmnopqrstuvwxyz"
   splits     = [(word[:i], word[i:])    for i in range(len(word) + 1)]
   deletes    = [L + R[1:]               for L, R in splits if R]
   transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R)>1]
@@ -55,21 +55,20 @@ def spelltest(tests, correct_func, dictionary_ptr, verbose=False):
     if w != right:
       unknown += (right not in dictionary_ptr)
       if verbose:
-        print('correction({}) => {} ({}); expected {} ({})'.format(wrong, w, dictionary_ptr[w], right, dictionary_ptr[right]))
+        print("correction({}) => {} ({}); expected {} ({})".format(wrong, w, dictionary_ptr[w], right, dictionary_ptr[right]))
   dt = time.time() - start
-  print('{:.0%} of {} correct ({:.0%} unknown) at {:.0f} words per second'.format(good / n, n, unknown / n, n / dt))
+  print("{:.0%} of {} correct ({:.0%} unknown) at {:.0f} words per second".format(good / n, n, unknown / n, n / dt))
     
 def Testset(lines):
-  "Parse 'right: wrong1 wrong2' lines into [('right', 'wrong1'), ('right', 'wrong2')] pairs."
   return [(right, wrong)
-          for (right, wrongs) in (line.split(':') for line in lines)
+          for (right, wrongs) in (line.split(":") for line in lines)
           for wrong in wrongs.split()]
 
 print("norvig")
-WORDS = Counter(words(open('big.txt').read()))
-spelltest(Testset(open('spell-testset1.txt')), correction, WORDS)
-spelltest(Testset(open('spell-testset2.txt')), correction, WORDS)
+WORDS = Counter(words(open("big.txt").read()))
+spelltest(Testset(open("spell-testset1.txt")), correction, WORDS)
+spelltest(Testset(open("spell-testset2.txt")), correction, WORDS)
 print("norvig added data")
-WORDS = Counter(words(open('big.txt').read()) + words(open('lemmas.txt').read()))
-spelltest(Testset(open('spell-testset1.txt')), correction, WORDS)
-spelltest(Testset(open('spell-testset2.txt')), correction, WORDS)
+WORDS = Counter(words(open("big.txt").read()) + words(open("lemmas.txt").read()))
+spelltest(Testset(open("spell-testset1.txt")), correction, WORDS)
+spelltest(Testset(open("spell-testset2.txt")), correction, WORDS)

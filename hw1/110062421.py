@@ -15,7 +15,7 @@ def P(word):
   "Probability of `word`."
   return WORDS[word] / sum(WORDS.values())
 
-def correction(word): 
+def correct_norvig(word): 
   "Most probable spelling correction for word."
   return max(candidates(word), key=P)
 
@@ -66,9 +66,9 @@ def Testset(lines):
 
 print("norvig")
 WORDS = Counter(words(open("big.txt").read()))
-spelltest(Testset(open("spell-testset1.txt")), correction, WORDS)
-spelltest(Testset(open("spell-testset2.txt")), correction, WORDS)
+spelltest(Testset(open("spell-testset1.txt")), correct_norvig, WORDS)
+spelltest(Testset(open("spell-testset2.txt")), correct_norvig, WORDS)
 print("norvig added data")
 WORDS = Counter(words(open("big.txt").read()) + words(open("lemmas.txt").read()))
-spelltest(Testset(open("spell-testset1.txt")), correction, WORDS)
-spelltest(Testset(open("spell-testset2.txt")), correction, WORDS)
+spelltest(Testset(open("spell-testset1.txt")), correct_norvig, WORDS)
+spelltest(Testset(open("spell-testset2.txt")), correct_norvig, WORDS)

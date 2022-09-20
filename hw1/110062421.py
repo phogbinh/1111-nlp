@@ -43,19 +43,19 @@ def edits2(word):
 
 ################ Test Code 
 
-def spelltest(tests, verbose=False):
+def spelltest(tests, correct_func, dictionary_ptr, verbose=False):
   "Run correction(wrong) on all (right, wrong) pairs; report results."
   import time
   start = time.time()
   good, unknown = 0, 0
   n = len(tests)
   for right, wrong in tests:
-    w = correction(wrong)
+    w = correct_func(wrong)
     good += (w == right)
     if w != right:
-      unknown += (right not in WORDS)
+      unknown += (right not in dictionary_ptr)
       if verbose:
-        print('correction({}) => {} ({}); expected {} ({})'.format(wrong, w, WORDS[w], right, WORDS[right]))
+        print('correction({}) => {} ({}); expected {} ({})'.format(wrong, w, dictionary_ptr[w], right, dictionary_ptr[right]))
   dt = time.time() - start
   print('{:.0%} of {} correct ({:.0%} unknown) at {:.0f} words per second'.format(good / n, n, unknown / n, n / dt))
     
@@ -67,9 +67,9 @@ def Testset(lines):
 
 print("norvig")
 WORDS = Counter(words(open('big.txt').read()))
-spelltest(Testset(open('spell-testset1.txt')))
-spelltest(Testset(open('spell-testset2.txt')))
+spelltest(Testset(open('spell-testset1.txt')), correction, WORDS)
+spelltest(Testset(open('spell-testset2.txt')), correction, WORDS)
 print("norvig added data")
 WORDS = Counter(words(open('big.txt').read()) + words(open('lemmas.txt').read()))
-spelltest(Testset(open('spell-testset1.txt')))
-spelltest(Testset(open('spell-testset2.txt')))
+spelltest(Testset(open('spell-testset1.txt')), correction, WORDS)
+spelltest(Testset(open('spell-testset2.txt')), correction, WORDS)

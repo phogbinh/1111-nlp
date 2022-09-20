@@ -72,3 +72,16 @@ print("norvig added data")
 WORDS = Counter(words(open("big.txt").read()) + words(open("lemmas.txt").read()))
 spelltest(Testset(open("spell-testset1.txt")), correct_norvig, WORDS)
 spelltest(Testset(open("spell-testset2.txt")), correct_norvig, WORDS)
+
+from symspellpy import SymSpell, Verbosity
+
+def correct_symspell(word):
+  suggestions_ptr = symspell_ptr.lookup(word, Verbosity.CLOSEST, max_edit_distance=EDIT_DISTANCE, include_unknown=True)
+  return suggestions_ptr[0]._term
+
+print("symspell")
+EDIT_DISTANCE = 2
+symspell_ptr = SymSpell(max_dictionary_edit_distance=EDIT_DISTANCE)
+symspell_ptr.create_dictionary("big.txt")
+spelltest(Testset(open("spell-testset1.txt")), correct_symspell, symspell_ptr.words)
+spelltest(Testset(open("spell-testset2.txt")), correct_symspell, symspell_ptr.words)

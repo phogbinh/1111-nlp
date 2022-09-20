@@ -13,9 +13,9 @@ def words(text): return re.findall(r'\w+', text.lower())
 
 WORDS = Counter(words(open('big.txt').read()) + words(open('lemmas.txt').read()))
 
-def P(word, N=sum(WORDS.values())): 
+def P(word):
   "Probability of `word`."
-  return WORDS[word] / N
+  return WORDS[word] / sum(WORDS.values())
 
 def correction(word): 
   "Most probable spelling correction for word."

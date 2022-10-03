@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# generated binary
+hw3/BNC.2w.c.txt
+hw3/BNC.2w.txt
+hw3/BNC.A.txt

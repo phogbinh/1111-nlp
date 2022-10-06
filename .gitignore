@@ -131,6 +131,6 @@ dmypy.json
 # generated binary
 hw3/BNC.2w.c.txt
 hw3/BNC.2w.txt
-hw3/BNC.A.txt
+hw3/BNC.*.txt
 hw3/bnc.txt
 hw3/bnc_accident.txt
